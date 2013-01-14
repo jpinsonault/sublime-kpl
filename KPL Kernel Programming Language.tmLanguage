@@ -12,28 +12,50 @@
 	<key>patterns</key>
 	<array>
 		<dict>
+			<key>begin</key>
+			<string>^\s*(function|method)\s+([A-Za-z_][A-Za-z0-9_]*\s*)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>storage.type.function.kpl</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.function.kpl</string>
+				</dict>
+			</dict>
 			<key>comment</key>
-			<string>Function, method declarations are highlighted</string>
-			<key>match</key>
-			<string>(?&lt;=function|method)\s*(\w+)</string>
+			<string>Matches function names</string>
+			<key>end</key>
+			<string>(\()</string>
 			<key>name</key>
-			<string>entity.name.function.kpl</string>
+			<string>meta.function.kpl</string>
 		</dict>
 		<dict>
+			<key>begin</key>
+			<string>^\s*(class|behavior)\s+([A-Za-z_][A-Za-z0-9_]*\s*)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>storage.type.function.kpl</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.function.kpl</string>
+				</dict>
+			</dict>
 			<key>comment</key>
-			<string>class, behavior declarations are highlighted</string>
-			<key>match</key>
-			<string>(?&lt;=class|behavior)\s*(\w+)</string>
+			<string>Matches function names</string>
+			<key>end</key>
+			<string>$</string>
 			<key>name</key>
-			<string>entity.name.class.kpl</string>
-		</dict>
-		<dict>
-			<key>comment</key>
-			<string>Uses keyword</string>
-			<key>match</key>
-			<string>(?&lt;=uses)\s*(\w+)</string>
-			<key>name</key>
-			<string>string.include.kpl</string>
+			<string>meta.function.kpl</string>
 		</dict>
 		<dict>
 			<key>comment</key>
@@ -58,6 +80,29 @@
 			<string>\b(array|bool|char|double|float|int|long|signed|void)\b</string>
 			<key>name</key>
 			<string>storage.type.kpl</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>^\s*(superclass)\s+([A-Za-z_][A-Za-z0-9_]*\s*)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.kpl</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>storage.type.kpl</string>
+				</dict>
+			</dict>
+			<key>comment</key>
+			<string>Matches function names</string>
+			<key>end</key>
+			<string>$</string>
+			<key>name</key>
+			<string>meta.function.kpl</string>
 		</dict>
 		<dict>
 			<key>comment</key>
@@ -113,7 +158,7 @@
 			<key>begin</key>
 			<string>'</string>
 			<key>comment</key>
-			<string>Double quoted strings</string>
+			<string>Single quoted strings</string>
 			<key>end</key>
 			<string>'</string>
 			<key>name</key>
@@ -128,7 +173,7 @@
 		</dict>
 		<dict>
 			<key>comment</key>
-			<string>Various number. I grabbed this from the python files so I don't know if it'll cause any weird issues, but it seems to work so far</string>
+			<string>Various number. I grabbed this from the kpl files so I don't know if it'll cause any weird issues, but it seems to work so far</string>
 			<key>match</key>
 			<string>\b(?i:(0x\h*))</string>
 			<key>name</key>
@@ -197,6 +242,21 @@
 	</array>
 	<key>repository</key>
 	<dict>
+		<key>entity_name_function</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#generic_names</string>
+				</dict>
+			</array>
+		</dict>
+		<key>generic_names</key>
+		<dict>
+			<key>match</key>
+			<string>[A-Za-z_][A-Za-z0-9_]*</string>
+		</dict>
 		<key>string_escaped_char</key>
 		<dict>
 			<key>patterns</key>

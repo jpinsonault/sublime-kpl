@@ -16,23 +16,46 @@
                     "match": "\\\\."
                 }
             ]
+        },
+        "entity_name_function": {
+            "patterns": [
+                {
+                    "include": "#generic_names"
+                }
+            ]
+        },
+        "generic_names": {
+            "match": "[A-Za-z_][A-Za-z0-9_]*"
         }
     },
     "patterns": [
         {
-            "match": "(?<=function|method)\\s*(\\w+)",
-            "name": "entity.name.function.kpl",
-            "comment": "Function, method declarations are highlighted"
+            "begin": "^\\s*(function|method)\\s+([A-Za-z_][A-Za-z0-9_]*\\s*)", 
+            "beginCaptures": {
+                "1": {
+                    "name": "storage.type.function.kpl"
+                },
+                "2": {
+                    "name": "entity.name.function.kpl"
+                }
+            }, 
+            "end": "(\\()",  
+            "name": "meta.function.kpl",
+            "comment": "Matches function names"
         },
         {
-            "match": "(?<=class|behavior)\\s*(\\w+)",
-            "name": "entity.name.class.kpl",
-            "comment": "class, behavior declarations are highlighted"
-        },
-        {
-            "match": "(?<=uses)\\s*(\\w+)",
-            "name": "string.include.kpl",
-            "comment": "Uses keyword"
+            "begin": "^\\s*(class|behavior)\\s+([A-Za-z_][A-Za-z0-9_]*\\s*)", 
+            "beginCaptures": {
+                "1": {
+                    "name": "storage.type.function.kpl"
+                },
+                "2": {
+                    "name": "entity.name.function.kpl"
+                }
+            }, 
+            "end": "$",  
+            "name": "meta.function.kpl",
+            "comment": "Matches function names"
         },
         {
             "match": "(?<=new|of|ptr to|asPtrTo)\\s+(\\w+)",
@@ -48,6 +71,20 @@
             "match": "\\b(array|bool|char|double|float|int|long|signed|void)\\b", 
             "name": "storage.type.kpl",
             "comment": "Native data types"
+        },
+        {
+            "begin": "^\\s*(superclass)\\s+([A-Za-z_][A-Za-z0-9_]*\\s*)", 
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.kpl"
+                },
+                "2": {
+                    "name": "storage.type.kpl"
+                }
+            }, 
+            "end": "$",  
+            "name": "meta.function.kpl",
+            "comment": "Matches function names"
         },
         {
             "match": "\\b(alloc|anyType|array|arraySize|asInteger|asPtrTo|behavior|bool|break|by|case|catch|char|class|code|const|continue|debug|default|do|else|elseIf|endBehavior|endClass|endCode|endFor|endFunction|endHeader|endIf|endInterface|endMethod|endRecord|endSwitch|endTry|endWhile|enum|errors|extends|external|false|fields|for|free|function|header|if|implements|infix|int|interface|isInstanceOf|isKindOf|messages|method|methods|new|null|of|prefix|ptr|record|renaming|return|returns|self|sizeOf|suer|superclass|switch|throw|to|true|try|type|typeOfNull|until|uses|var|void|while)\\b", 
@@ -85,7 +122,7 @@
             "begin": "'", 
             "end": "'", 
             "name": "string.kpl",
-            "comment": "Double quoted strings",
+            "comment": "Single quoted strings",
             "patterns": [
                 {
                     "include": "#string_escaped_char"
@@ -95,7 +132,7 @@
         {
             "match": "\\b(?i:(0x\\h*))", 
             "name": "constant.numeric.integer.hexadecimal.kpl",
-            "comment": "Various number. I grabbed this from the python files so I don't know if it'll cause any weird issues, but it seems to work so far"
+            "comment": "Various number. I grabbed this from the kpl files so I don't know if it'll cause any weird issues, but it seems to work so far"
         },
         {
             "match": "\\b(0[0-7]+)", 
