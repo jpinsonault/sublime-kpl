@@ -1,0 +1,146 @@
+{
+    "fileTypes": [
+        "c", 
+        "h"
+    ], 
+    "name": "KPL Kernel Programming Language", 
+    "patterns": [
+        {
+            "match": "(?<=function|method|class|behavior)\\s*(\\w+)",
+            "name": "entity.name.function.kpl",
+            "comment": "Function, method declarations are highlighted"
+        },
+        {
+            "match": "(?<=new|of|ptr to|asPtrTo)\\s+(\\w+)",
+            "name": "storage.type.kpl",
+            "comment": "Ensures that user defined data types are highlighted"
+        },
+        {
+            "match": "\\b(true|false|null)\\b", 
+            "name": "constant.language.kpl",
+            "comment": "Constants"
+        },
+        {
+            "match": "\\b(array|bool|char|double|float|int|long|signed|void)\\b", 
+            "name": "storage.type.kpl",
+            "comment": "Native data types"
+        },
+        {
+            "match": "\\b(alloc|anyType|array|arraySize|asInteger|asPtrTo|behavior|bool|break|by|case|catch|char|class|code|const|continue|debug|default|do|else|elseIf|endBehavior|endClass|endCode|endFor|endFunction|endHeader|endIf|endInterface|endMethod|endRecord|endSwitch|endTry|endWhile|enum|errors|extends|external|false|fields|for|free|function|header|if|implements|infix|int|interface|isInstanceOf|isKindOf|messages|method|methods|new|null|of|prefix|ptr|record|renaming|return|returns|self|sizeOf|suer|superclass|switch|throw|to|true|try|type|typeOfNull|until|uses|var|void|while)\\b", 
+            "name": "keyword.source.kpl",
+            "comment": "All the keywords in the language"
+        },
+        {
+            "match": "--.*$", 
+            "name": "comment.kpl",
+            "comment": "Single line comments"
+        }, 
+        {
+            "begin": "/\\*", 
+            "end": "\\*/", 
+            "name": "comment.kpl",
+            "comment": "Multi-line comments"
+        }, 
+        {
+            "begin": "\"", 
+            "end": "\"", 
+            "name": "string.kpl",
+            "comment": "Strings",
+            "patterns": [
+            	{
+            		"comment": "Highlights escaped characters within strings",
+			        "captures": {
+			            "1": {
+			                "name": "constant.character.escape.hex.kpl"
+			            }, 
+			            "10": {
+			                "name": "constant.character.escape.linefeed.kpl"
+			            }, 
+			            "11": {
+			                "name": "constant.character.escape.return.kpl"
+			            }, 
+			            "12": {
+			                "name": "constant.character.escape.tab.kpl"
+			            }, 
+			            "13": {
+			                "name": "constant.character.escape.vertical-tab.kpl"
+			            }, 
+			            "2": {
+			                "name": "constant.character.escape.octal.kpl"
+			            }, 
+			            "3": {
+			                "name": "constant.character.escape.newline.kpl"
+			            }, 
+			            "4": {
+			                "name": "constant.character.escape.backlash.kpl"
+			            }, 
+			            "5": {
+			                "name": "constant.character.escape.double-quote.kpl"
+			            }, 
+			            "6": {
+			                "name": "constant.character.escape.single-quote.kpl"
+			            }, 
+			            "7": {
+			                "name": "constant.character.escape.bell.kpl"
+			            }, 
+			            "8": {
+			                "name": "constant.character.escape.backspace.kpl"
+			            }, 
+			            "9": {
+			                "name": "constant.character.escape.formfeed.kpl"
+			            }
+			        }, 
+			        "match": "(\\\\x[0-9A-F]{2})|(\\\\[0-7]{3})|(\\\\\\n)|(\\\\\\\\)|(\\\\\\\")|(\\\\')|(\\\\a)|(\\\\b)|(\\\\f)|(\\\\n)|(\\\\r)|(\\\\t)|(\\\\v)"
+		        }
+            ]
+        },
+        {
+            "match": "\\b(?i:(0x\\h*))", 
+            "name": "constant.numeric.integer.hexadecimal.kpl",
+            "comment": "Various number. I grabbed this from the python files so I don't know if it'll cause any weird issues, but it seems to work so far"
+        },
+        {
+            "match": "\\b(0[0-7]+)", 
+            "name": "constant.numeric.integer.octal.kpl"
+        }, 
+        {
+            "match": "\\b(?i:(((\\d+(\\.(?=[^a-zA-Z_])\\d*)?|(?<=[^0-9a-zA-Z_])\\.\\d+)(e[\\-\\+]?\\d+)?))J)", 
+            "name": "constant.numeric.complex.kpl"
+        }, 
+        {
+            "match": "\\b(?i:(\\d+\\.\\d*(e[\\-\\+]?\\d+)?))(?=[^a-zA-Z_])", 
+            "name": "constant.numeric.float.kpl"
+        }, 
+        {
+            "match": "(?<=[^0-9a-zA-Z_])(?i:(\\.\\d+(e[\\-\\+]?\\d+)?))", 
+            "name": "constant.numeric.float.kpl"
+        }, 
+        {
+            "match": "\\b(?i:(\\d+e[\\-\\+]?\\d+))", 
+            "name": "constant.numeric.float.kpl"
+        },
+        {
+            "match": "\\b([1-9]+[0-9]*|0)", 
+            "name": "constant.numeric.integer.decimal.kpl"
+        },
+        {
+            "match": "(==|!=|<=|>=|<>|<|>)", 
+            "name": "keyword.operator.comparison.kpl"
+        }, 
+        {
+            "match": "(=)", 
+            "name": "keyword.operator.assignment.kpl"
+        },
+        {
+            "match": "(\\-|\\+|\\*|\\/|%)", 
+            "name": "keyword.operator.arithmetic.kpl"
+        }, 
+        {
+            "match": "(!|&&|\\|\\|)", 
+            "name": "keyword.operator.logical.kpl"
+        }
+        
+    ], 
+    "scopeName": "source.kpl", 
+    "uuid": "16e882cc-c040-4150-a096-c175197698ff"
+}
