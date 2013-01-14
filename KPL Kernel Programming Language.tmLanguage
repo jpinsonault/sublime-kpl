@@ -15,9 +15,25 @@
 			<key>comment</key>
 			<string>Function, method declarations are highlighted</string>
 			<key>match</key>
-			<string>(?&lt;=function|method|class|behavior)\s*(\w+)</string>
+			<string>(?&lt;=function|method)\s*(\w+)</string>
 			<key>name</key>
 			<string>entity.name.function.kpl</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>class, behavior declarations are highlighted</string>
+			<key>match</key>
+			<string>(?&lt;=class|behavior)\s*(\w+)</string>
+			<key>name</key>
+			<string>entity.name.class.kpl</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>Uses keyword</string>
+			<key>match</key>
+			<string>(?&lt;=uses)\s*(\w+)</string>
+			<key>name</key>
+			<string>string.include.kpl</string>
 		</dict>
 		<dict>
 			<key>comment</key>
@@ -68,12 +84,19 @@
 			<string>\*/</string>
 			<key>name</key>
 			<string>comment.kpl</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#string_escaped_char</string>
+				</dict>
+			</array>
 		</dict>
 		<dict>
 			<key>begin</key>
 			<string>"</string>
 			<key>comment</key>
-			<string>Strings</string>
+			<string>Double quoted strings</string>
 			<key>end</key>
 			<string>"</string>
 			<key>name</key>
@@ -81,78 +104,25 @@
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>captures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>constant.character.escape.hex.kpl</string>
-						</dict>
-						<key>10</key>
-						<dict>
-							<key>name</key>
-							<string>constant.character.escape.linefeed.kpl</string>
-						</dict>
-						<key>11</key>
-						<dict>
-							<key>name</key>
-							<string>constant.character.escape.return.kpl</string>
-						</dict>
-						<key>12</key>
-						<dict>
-							<key>name</key>
-							<string>constant.character.escape.tab.kpl</string>
-						</dict>
-						<key>13</key>
-						<dict>
-							<key>name</key>
-							<string>constant.character.escape.vertical-tab.kpl</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>name</key>
-							<string>constant.character.escape.octal.kpl</string>
-						</dict>
-						<key>3</key>
-						<dict>
-							<key>name</key>
-							<string>constant.character.escape.newline.kpl</string>
-						</dict>
-						<key>4</key>
-						<dict>
-							<key>name</key>
-							<string>constant.character.escape.backlash.kpl</string>
-						</dict>
-						<key>5</key>
-						<dict>
-							<key>name</key>
-							<string>constant.character.escape.double-quote.kpl</string>
-						</dict>
-						<key>6</key>
-						<dict>
-							<key>name</key>
-							<string>constant.character.escape.single-quote.kpl</string>
-						</dict>
-						<key>7</key>
-						<dict>
-							<key>name</key>
-							<string>constant.character.escape.bell.kpl</string>
-						</dict>
-						<key>8</key>
-						<dict>
-							<key>name</key>
-							<string>constant.character.escape.backspace.kpl</string>
-						</dict>
-						<key>9</key>
-						<dict>
-							<key>name</key>
-							<string>constant.character.escape.formfeed.kpl</string>
-						</dict>
-					</dict>
-					<key>comment</key>
-					<string>Highlights escaped characters within strings</string>
-					<key>match</key>
-					<string>(\\x[0-9A-F]{2})|(\\[0-7]{3})|(\\\n)|(\\\\)|(\\\")|(\\')|(\\a)|(\\b)|(\\f)|(\\n)|(\\r)|(\\t)|(\\v)</string>
+					<key>include</key>
+					<string>#string_escaped_char</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>'</string>
+			<key>comment</key>
+			<string>Double quoted strings</string>
+			<key>end</key>
+			<string>'</string>
+			<key>name</key>
+			<string>string.kpl</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#string_escaped_char</string>
 				</dict>
 			</array>
 		</dict>
@@ -225,6 +195,27 @@
 			<string>keyword.operator.logical.kpl</string>
 		</dict>
 	</array>
+	<key>repository</key>
+	<dict>
+		<key>string_escaped_char</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>match</key>
+					<string>\\(\\|[abefnprtv'"?]|[0-3]\d{,2}|[4-7]\d?|x[a-fA-F0-9]{,2}|u[a-fA-F0-9]{,4}|U[a-fA-F0-9]{,8})</string>
+					<key>name</key>
+					<string>constant.character.escape.c</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\\.</string>
+					<key>name</key>
+					<string>invalid.illegal.unknown-escape.c</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
 	<key>scopeName</key>
 	<string>source.kpl</string>
 	<key>uuid</key>
