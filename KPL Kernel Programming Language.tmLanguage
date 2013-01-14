@@ -61,7 +61,7 @@
 			<key>comment</key>
 			<string>Ensures that user defined data types are highlighted</string>
 			<key>match</key>
-			<string>(?&lt;=new|of|ptr to|asPtrTo)\s+(\w+)</string>
+			<string>(?&lt;=new|of|ptr to|asPtrTo)\s+(?!new)(\w+)</string>
 			<key>name</key>
 			<string>storage.type.kpl</string>
 		</dict>

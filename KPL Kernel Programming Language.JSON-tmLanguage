@@ -58,7 +58,7 @@
             "comment": "Matches function names"
         },
         {
-            "match": "(?<=new|of|ptr to|asPtrTo)\\s+(\\w+)",
+            "match": "(?<=new|of|ptr to|asPtrTo)\\s+(?!new)(\\w+)",
             "name": "storage.type.kpl",
             "comment": "Ensures that user defined data types are highlighted"
         },
