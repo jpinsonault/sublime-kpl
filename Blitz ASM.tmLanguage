@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array>
+		<string>s</string>
+	</array>
+	<key>name</key>
+	<string>Blitz ASM</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>comment</key>
+			<string> </string>
+			<key>match</key>
+			<string>\.(import|export)(?=\s+\w+)</string>
+			<key>name</key>
+			<string>keyword.control.import</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>^.*(!.*)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>comment.asm.</string>
+				</dict>
+			</dict>
+			<key>comment</key>
+			<string>Comments</string>
+			<key>end</key>
+			<string>$</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>^(\w*):\s*</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.function.</string>
+				</dict>
+			</dict>
+			<key>comment</key>
+			<string>Matches function names</string>
+			<key>end</key>
+			<string>$</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>source.asm</string>
+	<key>uuid</key>
+	<string>3159c014-f5b8-4965-95c9-dbee62c9442d</string>
+</dict>
+</plist>

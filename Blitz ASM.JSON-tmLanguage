@@ -1,0 +1,33 @@
+{"name": "Blitz ASM",
+    "scopeName": "source.asm",
+    "fileTypes": ["s"],
+    "patterns": [
+		{
+	        "match": "\\.(import|export)(?=\\s+\\w+)", 
+	        "name": "keyword.control.import",
+	        "comment": " "
+	    },
+        {
+            "begin": "^.*(!.*)", 
+            "beginCaptures": {
+                "1": {
+                    "name": "comment.asm."
+                }
+            }, 
+            "end": "$",  
+            "comment": "Comments"
+        },
+        {
+            "begin": "^(\\w*):\\s*", 
+            "beginCaptures": {
+                "1": {
+                    "name": "entity.name.function."
+                }
+            }, 
+            "end": "$",  
+            "comment": "Matches function names"
+        }
+  ],
+  "uuid": "3159c014-f5b8-4965-95c9-dbee62c9442d"
+}
+
