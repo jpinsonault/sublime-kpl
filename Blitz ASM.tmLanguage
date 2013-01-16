@@ -12,27 +12,69 @@
 	<array>
 		<dict>
 			<key>comment</key>
-			<string> </string>
+			<string>keywords in the language</string>
 			<key>match</key>
-			<string>\.(import|export)(?=\s+\w+)</string>
+			<string>\b(push|pop|sethi|set|setlo|ldaddr|cmp|mov|syscall|nop|wait|debug|cleari|seti|clearp|setp|clears|reti|ret|debug2|tset|readu|readu|writeu|writeu|ldptbr|ldptlr|ftoi|itof|fadd|fsub|fmul|fdiv|fcmp|fsqrt|fneg|fabs|fload|fload|fstore|fstore|call|call|jmp|jmp|be|be|bne|bne|bl|bl|ble|ble|bg|bg|bge|bge|bvs|bvs|bvc|bvc|bns|bns|bnc|bnc|bss|bss|bsc|bsc|bis|bis|bic|bic|bps|bps|bpc|bpc|add|add|sub|sub|mul|mul|div|div|sll|sll|srl|srl|sra|sra|or|or|and|and|andn|andn|xor|xor|rem|rem|load|load|loadb|loadb|loadv|loadv|loadbv|loadbv|store|store|storeb|storeb|storev|storev|storebv|storebv)\b</string>
 			<key>name</key>
-			<string>keyword.control.import</string>
+			<string>keyword.source.asm</string>
 		</dict>
 		<dict>
-			<key>begin</key>
-			<string>^.*(!.*)</string>
-			<key>beginCaptures</key>
+			<key>captures</key>
 			<dict>
 				<key>1</key>
 				<dict>
 					<key>name</key>
-					<string>comment.asm.</string>
+					<string>keyword.control.import.include</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>string</string>
 				</dict>
 			</dict>
+			<key>match</key>
+			<string>^\s*(\.export|import)\s*(\w+)\s*</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>keyword</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>^\s*(\.\w+)</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>support.function.any-method</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>\b(r\d{1,2})\b</string>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>"</string>
 			<key>comment</key>
-			<string>Comments</string>
+			<string>Double quoted strings</string>
 			<key>end</key>
-			<string>$</string>
+			<string>"</string>
+			<key>name</key>
+			<string>string.kpl</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#string_escaped_char</string>
+				</dict>
+			</array>
 		</dict>
 		<dict>
 			<key>begin</key>
@@ -50,7 +92,94 @@
 			<key>end</key>
 			<string>$</string>
 		</dict>
+		<dict>
+			<key>comment</key>
+			<string>Various number. I grabbed this from the kpl files so I don't know if it'll cause any weird issues, but it seems to work so far</string>
+			<key>match</key>
+			<string>\b(?i:(0x\h*))</string>
+			<key>name</key>
+			<string>constant.numeric.integer.hexadecimal.kpl</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\b(0[0-7]+)</string>
+			<key>name</key>
+			<string>constant.numeric.integer.octal.kpl</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\b(?i:(((\d+(\.(?=[^a-zA-Z_])\d*)?|(?&lt;=[^0-9a-zA-Z_])\.\d+)(e[\-\+]?\d+)?))J)</string>
+			<key>name</key>
+			<string>constant.numeric.complex.kpl</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\b(?i:(\d+\.\d*(e[\-\+]?\d+)?))(?=[^a-zA-Z_])</string>
+			<key>name</key>
+			<string>constant.numeric.float.kpl</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>(?&lt;=[^0-9a-zA-Z_])(?i:(\.\d+(e[\-\+]?\d+)?))</string>
+			<key>name</key>
+			<string>constant.numeric.float.kpl</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\b(?i:(\d+e[\-\+]?\d+))</string>
+			<key>name</key>
+			<string>constant.numeric.float.kpl</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\b([1-9]+[0-9]*|0)</string>
+			<key>name</key>
+			<string>constant.numeric.integer.decimal.kpl</string>
+		</dict>
+		<dict>
+			<key>include</key>
+			<string>#comment_match</string>
+		</dict>
 	</array>
+	<key>repository</key>
+	<dict>
+		<key>comment_match</key>
+		<dict>
+			<key>comment</key>
+			<string> </string>
+			<key>match</key>
+			<string>!.*$</string>
+			<key>name</key>
+			<string>comment.asm.</string>
+		</dict>
+		<key>import_item</key>
+		<dict>
+			<key>comment</key>
+			<string> </string>
+			<key>match</key>
+			<string>(?&lt;=(?:import|export))\s+(\w+)</string>
+			<key>name</key>
+			<string>string</string>
+		</dict>
+		<key>string_escaped_char</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>match</key>
+					<string>\\(\\|[abefnprtv'"?]|[0-3]\d{,2}|[4-7]\d?|x[a-fA-F0-9]{,2}|u[a-fA-F0-9]{,4}|U[a-fA-F0-9]{,8})</string>
+					<key>name</key>
+					<string>constant.character.escape.kpl</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\\.</string>
+					<key>name</key>
+					<string>invalid.illegal.unknown-escape.kpl</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
 	<key>scopeName</key>
 	<string>source.asm</string>
 	<key>uuid</key>

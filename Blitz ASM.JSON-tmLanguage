@@ -1,22 +1,66 @@
-{"name": "Blitz ASM",
+{   "name": "Blitz ASM",
     "scopeName": "source.asm",
     "fileTypes": ["s"],
-    "patterns": [
-		{
-	        "match": "\\.(import|export)(?=\\s+\\w+)", 
-	        "name": "keyword.control.import",
-	        "comment": " "
-	    },
-        {
-            "begin": "^.*(!.*)", 
-            "beginCaptures": {
-                "1": {
-                    "name": "comment.asm."
+    "repository": {
+        "string_escaped_char": {
+            "patterns": [
+                {
+                    "name": "constant.character.escape.kpl", 
+                    "match": "\\\\(\\\\|[abefnprtv'\"?]|[0-3]\\d{,2}|[4-7]\\d?|x[a-fA-F0-9]{,2}|u[a-fA-F0-9]{,4}|U[a-fA-F0-9]{,8})"
+                }, 
+                {
+                    "name": "invalid.illegal.unknown-escape.kpl", 
+                    "match": "\\\\."
                 }
-            }, 
-            "end": "$",  
-            "comment": "Comments"
+            ]
         },
+        "comment_match":{
+            "match": "!.*$", 
+            "name": "comment.asm.",
+            "comment": " "
+        },
+        "import_item": {
+            "match": "(?<=(?:import|export))\\s+(\\w+)", 
+            "name": "string",
+            "comment": " "
+        }
+
+    },
+    "patterns": [
+        {
+            "match": "\\b(push|pop|sethi|set|setlo|ldaddr|cmp|mov|syscall|nop|wait|debug|cleari|seti|clearp|setp|clears|reti|ret|debug2|tset|readu|readu|writeu|writeu|ldptbr|ldptlr|ftoi|itof|fadd|fsub|fmul|fdiv|fcmp|fsqrt|fneg|fabs|fload|fload|fstore|fstore|call|call|jmp|jmp|be|be|bne|bne|bl|bl|ble|ble|bg|bg|bge|bge|bvs|bvs|bvc|bvc|bns|bns|bnc|bnc|bss|bss|bsc|bsc|bis|bis|bic|bic|bps|bps|bpc|bpc|add|add|sub|sub|mul|mul|div|div|sll|sll|srl|srl|sra|sra|or|or|and|and|andn|andn|xor|xor|rem|rem|load|load|loadb|loadb|loadv|loadv|loadbv|loadbv|store|store|storeb|storeb|storev|storev|storebv|storebv)\\b", 
+            "name": "keyword.source.asm",
+            "comment": "keywords in the language"
+        },
+        {  
+            "match": "^\\s*(\\.export|import)\\s*(\\w+)\\s*",
+            "captures": {
+                "1": { "name": "keyword.control.import.include" },
+                "2": { "name": "string" }
+            }
+        },
+        {  
+            "match": "^\\s*(\\.\\w+)",
+            "captures": {
+                "1": { "name": "keyword" }
+            }
+        },
+        {  
+            "match": "\\b(r\\d{1,2})\\b",
+            "captures": {
+                "1": { "name": "support.function.any-method" }
+            }
+        },
+        {
+            "begin": "\"", 
+            "end": "\"", 
+            "name": "string.kpl",
+            "comment": "Double quoted strings",
+            "patterns": [
+                { "include": "#string_escaped_char" }
+            ]
+        },
+        
         {
             "begin": "^(\\w*):\\s*", 
             "beginCaptures": {
@@ -24,8 +68,40 @@
                     "name": "entity.name.function."
                 }
             }, 
-            "end": "$",  
+            "end": "$",
             "comment": "Matches function names"
+        },
+        {
+            "match": "\\b(?i:(0x\\h*))", 
+            "name": "constant.numeric.integer.hexadecimal.kpl",
+            "comment": "Various number. I grabbed this from the kpl files so I don't know if it'll cause any weird issues, but it seems to work so far"
+        },
+        {
+            "match": "\\b(0[0-7]+)", 
+            "name": "constant.numeric.integer.octal.kpl"
+        }, 
+        {
+            "match": "\\b(?i:(((\\d+(\\.(?=[^a-zA-Z_])\\d*)?|(?<=[^0-9a-zA-Z_])\\.\\d+)(e[\\-\\+]?\\d+)?))J)", 
+            "name": "constant.numeric.complex.kpl"
+        }, 
+        {
+            "match": "\\b(?i:(\\d+\\.\\d*(e[\\-\\+]?\\d+)?))(?=[^a-zA-Z_])", 
+            "name": "constant.numeric.float.kpl"
+        }, 
+        {
+            "match": "(?<=[^0-9a-zA-Z_])(?i:(\\.\\d+(e[\\-\\+]?\\d+)?))", 
+            "name": "constant.numeric.float.kpl"
+        }, 
+        {
+            "match": "\\b(?i:(\\d+e[\\-\\+]?\\d+))", 
+            "name": "constant.numeric.float.kpl"
+        },
+        {
+            "match": "\\b([1-9]+[0-9]*|0)", 
+            "name": "constant.numeric.integer.decimal.kpl"
+        },
+        {
+            "include": "#comment_match"
         }
   ],
   "uuid": "3159c014-f5b8-4965-95c9-dbee62c9442d"
